@@ -1,0 +1,107 @@
+version: "3"
+
+services:
+
+  #----Orders----
+  order-service:
+    build: ./Orders
+    depends_on:
+      - eureka
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/orders
+      - EUREKA_URL=http://eureka:8761/eureka
+      - GATEWAY_SERVICE=gateway
+    networks:
+      - final-net
+    deploy:
+      replicas: 3
+  
+  #----Basket----
+  basket-service:
+    build: ./Basket
+    depends_on:
+      - eureka
+    environment:
+      - REDIS_DATABASE=0
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - EUREKA_URL=http://eureka:8761/eureka
+    networks:
+      - final-net
+    deploy:
+      replicas: 3
+      
+  #----Item----
+  item-service:
+    build: ./Items
+    depends_on:
+      - eureka
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/shop
+      - EUREKA_URL=http://eureka:8761/eureka
+    networks:
+      - final-net
+    deploy:
+      replicas: 3
+      
+  #----Auth----
+  auth-service:
+    build: ./Auth
+    depends_on:
+      - eureka
+    environment:
+      - MONGO_URI=mongodb://users-mongo:27017/users
+      - EUREKA_URL=http://eureka:8761/eureka
+    networks:
+      - final-net
+    deploy:
+      replicas: 3
+      
+  #----Gateway----
+  gateway:
+    build: ./Gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_URL=http://eureka:8761/eureka
+    networks:
+      - final-net
+  
+  #----Eureka----
+  eureka:
+    container_name: eureka
+    build: ./Eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - final-net
+  
+  #----Mongo----
+  mongodb:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - final-net
+
+  users-mongo:
+    container_name: users-mongo
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    networks:
+      - final-net
+
+  #----Redis----
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - final-net
+
+networks:
+  final-net:
+    driver: bridge

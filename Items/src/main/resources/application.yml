@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+  application:
+    name: item-service
+
+eureka:
+  client:
+    serviceUrl:
+     defaultZone: ${EUREKA_URL}
+  instance:
+    prefer-ip-address: true

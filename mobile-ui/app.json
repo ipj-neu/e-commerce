@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "mobile-ui",
+    "slug": "mobile-ui",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ipj131.mobileui"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "scheme": "my.app",
+    "extra": {
+      "eas": {
+        "projectId": "3e2980dd-a76c-47c5-887f-2ed282a3f76d"
+      }
+    }
+  }
+}
